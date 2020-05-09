@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hf.dao.system.UserMapper">
+<!-- <mapper namespace="com.hf.mapper.system.User"> -->
+	<resultMap type="com.hf.model.system.User" id="user">
+		<result column="user_id" property="userId" />
+		<result column="name" property="name" />
+		<result column="login_name" property="loginName" />
+		<result column="password" property="password" />
+		<result column="salt" property="salt" />
+		<result column="locked" property="locked" />
+		<result column="create_time" property="createTime" />
+	</resultMap>
+	
+	<!-- 增加用户 -->
+	<insert id="addUser" parameterType="com.hf.model.system.User">
+		INSERT INTO
+		sys_user(user_id,name,login_name,password,salt,locked,create_time)
+		VALUES
+		(#{userId},#{name},#{loginName},#{password},#{salt},#{locked},#{createTime})
+	</insert>
+	
+	<!-- 修改用户 -->
+	<update id="updateUser" parameterType="com.hf.model.system.User">
+		UPDATE sys_user SET
+		name=#{name},login_name=#{loginName},password=#{password},salt=#{salt},locked=#{locked},
+		create_time=#{createTime}
+		WHERE
+		user_id=#{userId}
+	</update>
+	
+	<!-- 删除用户 -->
+	<delete id="deleteUser" parameterType="java.lang.Integer">
+		DELETE FROM sys_user
+		WHERE
+		user_id=#{userId}
+	</delete>
+	
+	<!-- 查询：通过用户ID -->
+	<select id="queryUserByUserId" parameterType="java.lang.Integer"
+		resultMap="user">
+		SELECT * FROM sys_user WHERE user_id=#{userId}
+	</select>
+	
+	<!-- 查询：通过用户名称 -->
+	<select id="queryAllUser" resultMap="user">
+		SELECT * FROM sys_user
+	</select>
+
+	<!-- 查询：通过用户名称 -->
+	<select id="queryUserByName" parameterType="java.lang.String"
+		resultMap="user">
+		SELECT * FROM sys_user WHERE name=#{name}
+	</select>
+
+
+</mapper>
