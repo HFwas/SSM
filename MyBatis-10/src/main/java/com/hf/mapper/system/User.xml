@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hf.dao.system.UserMapper">
+<!-- <mapper namespace="com.hf.mapper.system.User"> -->
+	<resultMap type="com.hf.model.system.User" id="user">
+		<result column="user_id" property="userId" />
+		<result column="name" property="name" />
+		<result column="login_name" property="loginName" />
+		<result column="password" property="password" />
+		<result column="salt" property="salt" />
+		<result column="locked" property="locked" />
+		<result column="create_time" property="createTime" />
+	</resultMap>
+	
+	<!-- User queryUserByLoginNameAndPssword(User user); -->
+	<select id="queryUserByLoginNameAndPssword" parameterType="com.hf.model.system.User" 
+			resultMap="user">
+		select * from sys_user where login_name =#{loginName} and password =#{password}
+	</select>
+
+
+</mapper>
