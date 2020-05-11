@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hf.mapper.EmpMapper">
+	
+	<!--sql:设置一段公共SQL片段,可以被当前映射文件中所有的SQL语句所访问 -->
+	<sql id="empColums" >select eid,ename,age,sex from emp</sql>
+	
+	<!-- List<Emp> getAllEmp(); -->
+	<select id="getAllEmp" resultType="Emp">
+		select eid,ename,age,sex from emp
+	</select>
+	
+	<!-- List<Emp> getEmpListByMoreTJ(); -->
+	<!-- 多条件查询，若页面中没有设置此条件，SQL语句中一定不能有盖条件 -->
+	<!--  <if test=""><if/>:通过test表达式，拼凑SQL -->
+	<!--  <where>:添加where关键字，同时去掉多余的and -->
+	<!-- 
+		<trim prefix="" suffix="" prefixOverrides="" suffixOverrides="">:截取并拼接
+		prefix:在操作的sql语句前加入某些内容
+		suffix:在操作的sql语句后 加入某些内容
+		prefixOverrides:吧操作的sql语句前的某些内容去掉
+		suffixOverrides吧操作的sql语句后的某些内容去掉
+	 -->
+	<select id="getEmpListByMoreTJ" resultType="Emp">
+		<include refid="empColums"></include>
+		<trim prefix="where" suffixOverrides="and/or">
+			<if test="eid != null">
+				eid =#{eid} and 
+			</if>
+			<if test="ename != null and ename!=''">
+				ename =#{ename} and 
+			</if>
+			<if test=" age != null">
+				age =#{age} or
+			</if>
+			<if test="sex == 0 or sex == 1">
+				sex =#{sex}
+			</if>
+		</trim>
+	</select>
+	
+	<!-- 
+		<choose>:选择某一个when或者otherwise执行
+			<when>：通过test表达式拼接sql
+			</when>
+			..
+			<othewise></otherwise>:当when
+		</choose>
+	 -->
+	<!-- List<Emp> getEmpByChoose(Emp emp); -->
+	<select id="getEmpByChoose" resultType="Emp">
+		select eid,ename,age,sex from emp
+		where
+		<choose>
+			<when test="eid != null ">
+				eid = #{eid}
+			</when>
+			<when test="ename != null and ename != ''">
+				ename = #{ename}
+			</when>
+			<when test=" age != null ">
+				age = #{age}
+			</when>
+			<otherwise>
+				sex = #{sex}
+			</otherwise>
+		</choose>
+	</select>
+	
+	<!-- void insertEmp(Emp emp); -->
+	<insert id="insertEmp">
+		insert into emp(eid,ename,age,sex) values(
+			null,
+			#{ename},
+			#{age},
+			<choose>
+				<when test="sex == 0">'女'</when>
+				<when test="sex == 1">'男'</when>
+				<otherwise>'不详'</otherwise>
+			</choose>
+		)
+	</insert>
+	
+	<!-- void deleteMoreEmp(String eids); -->
+	<delete id="deleteMoreEmp">
+		delete from emp where eid in (${value})
+	</delete>
+	
+	<!-- 
+		<foreach collection="" close="" open="" index="" item="" separator=""></foreach>
+		对一个数组或集合进行遍历
+		<coolection:指定要遍历的集合或数组
+		close：设置循坏提的结束内容
+		open：设置循坏提的开始内容
+		index:若遍历的是list集合,index代表的是下标，
+		seperator:设置每一次循坏之间的分隔符
+		item:设置别名
+	 -->
+	 
+	<!-- 
+		delete from emp where eid in ()
+		delete from emp where eid =? or eid =? or eid=?
+	 -->
+	<!-- void deleteMoreByList(List<Integer> eids); -->
+	<delete id="deleteMoreByList" >
+		delete from emp where eid in 
+		<foreach collection="eids" item="eid" separator="," open="(" close=")">
+			#{eid}
+		</foreach>
+	</delete>
+	
+	<!-- 
+		insert：
+		delete：
+			delete from emp where eid in ()
+			delete from emp where eid =? or eid =? or eid=?
+		update：
+			把每条数据修改为相同内容,注意：必须在链接地址后添加allowMultiQueries=true
+			delete from emp where eid in ()
+			delete from emp where eid =? or eid =? or eid=?
+		select:
+			select from emp where eid in ()
+			select from emp where eid =? or eid =? or eid=?
+	 -->
+	 
+	 <!-- void insertMoreByArray(Emp[] emps); -->
+	 <insert id="insertMoreByArray" >
+	 	insert into emp values
+	 	<foreach collection="emps" item="emp" separator=",">
+	 		(null,#{emp.ename},#{emp.age},#{emp.sex},1)
+	 	</foreach>
+	 </insert>
+	
+	<!-- void updateMoreByArray(@Param("emps")Emp[] emps); -->
+	<update id="updateMoreByArray">
+		<foreach collection="emps" item="emp">
+			update emp set ename=#{emp.ename} ,age =#{emp.age},sex=#{emp.sex} where eid =#{emp.eid};
+		</foreach>
+	</update>
+</mapper>
