@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hf.mapper.EmpMapper">
+	
+	<!--  Emp getEmpByEid(String eid);  通过用户id -->
+	<select id="getEmpByEid" resultType="com.hf.bean.Emp">
+		select eid,ename,age,sex from emp where eid=#{eid};
+	</select>
+	
+	<!--  List<Emp> getAllEmp();  查询所有用户信息-->
+	<select id="getAllEmp" resultType="com.hf.bean.Emp"> 
+		select * from emp;
+	</select>
+	
+	<!--  void addEmp(Emp emp);  添加用户信息-->
+	<insert id="addEmp" >
+		insert into emp values (null,#{ename},#{age},#{sex})
+	</insert>
+	
+	<!--  void deleteEmp(String eid); 删除用户信息-->
+	<delete id="deleteEmp">
+		delete from emp where eid=#{eid}
+	</delete>
+	
+	<!--  void updateEmp(Emp emp);  修改用户信息-->	
+	<update id="updateEmp">
+		update emp set ename= #{ename} ,age = #{age} ,sex = #{sex} where eid = #{eid}
+	</update>
+	
+</mapper>

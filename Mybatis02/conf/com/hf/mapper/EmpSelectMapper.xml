@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hf.mapper.EmpSelectMapper">
+	
+	<!--  Emp getEmpByEid(String eid);  通过用户id -->
+	<select id="getEmpByEid" resultType="com.hf.bean.Emp">
+		select eid,ename,age,sex from emp where eid=#{eid}
+	</select>
+	
+	<!-- Integer getCount();  查询所有用户信息-->
+	<select id="getCount" resultType="Integer"> 
+		SELECT COUNT(eid) from emp
+	</select>
+	
+	<!--  Map<String, Object> getEmpMapByEid(String eid);  添加用户信息-->
+	<select id="getEmpMapByEid" resultType="java.util.HashMap">
+		select eid,ename,age,sex from emp where eid=#{eid}
+	</select>
+	
+	<!--  Map<String, Object> getAllEmpMap();-->
+	<select id="getAllEmpMap" resultType="com.hf.bean.Emp">
+		select eid,ename,age,sex from emp
+	</select>
+	
+</mapper>

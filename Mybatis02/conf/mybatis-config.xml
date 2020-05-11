@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	
+	<!-- 
+		<environments>用来设置连接数据库的环境    default:设置默认使用的数据库环境
+		<environment>设置某个具体的数据库环境   id 数据库的唯一标识
+	  -->
+	<properties resource="jdbc.properties"></properties>
+	<!--  <properties>设置或引入资源文件   resource:在类路径下访问资源文件    url:在网络路径或磁盘路径下访问资源文件-->
+	
+	<!--  mapUnderscoreToCamelCase 将下划线之后转为大写字母 -->
+	<settings>
+		<!-- 将下划线映射成驼峰   user_name 映射成userName -->
+		<setting name="mapUnderscoreToCamelCase" value="true"/>
+		<!-- 开启延迟加载 -->
+		<setting name="lazyLoadingEnabled" value="true"/>
+		<!--  是否查询所有数据 -->
+		<setting name="aggressiveLazyLoading" value="false"/>
+	</settings>
+	
+	<!-- <typeAliases >
+		name=:"包名"  可以在resultType中使用别名
+		<package name=""/>
+	</typeAliases> -->
+	
+	<!-- typeAliases:类型别名，可以给 起一个别名 -->
+	<typeAliases>
+		<package name="com.hf.bean"/>
+	</typeAliases>
+	
+	<environments default="mysql">
+	
+		<environment id="mysql">
+			<!--  type="JDBC|MANAGED"     JDBC:使用原生的数据库操作，事物的提交和回滚需要自己做-->
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="${jdbc.driver}" />
+				<property name="url" value="${jdbc.url}" />
+				<property name="username" value="${jdbc.username}" />
+				<property name="password" value="${jdbc.password}" />
+			</dataSource>
+		</environment>
+		
+		<environment id="oracle">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="${jdbc.driver}" />
+				<property name="url" value="${jdbc.url}" />
+				<property name="username" value="${jdbc.username}" />
+				<property name="password" value="${jdbc.password}" />
+			</dataSource>
+		</environment>
+	</environments>
+	
+	<!--  引入映射文件 -->
+	<mappers>
+		<!-- <mapper resource="EmpMapper.xml" />
+		<mapper resource="DeptMapper.xml"/> -->
+		<package name="com.hf.mapper"/>
+	</mappers>
+	
+</configuration>
