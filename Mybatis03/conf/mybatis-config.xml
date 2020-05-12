@@ -31,6 +31,10 @@
 		<package name="com.hf.bean"/>
 	</typeAliases>
 	
+	<plugins>
+		<plugin interceptor="com.github.pagehelper.PageInterceptor"></plugin>
+	</plugins>
+	
 	<environments default="mysql">
 	
 		<environment id="mysql">
