@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
+	
+	<!-- 注入方式 -->
+	<!-- 第一种注入方式 set注入-->
+	<bean id="s1" class="com.hf.spring.di.Student">
+		<property name="id" value="1002"></property>
+		<property name="name" value="张三"></property>
+		<property name="age" value="25"></property>
+		<property name="sex" value="男"></property>
+	</bean>
+	
+	<!-- 第二种注入方式，构造方法注入 -->
+	<bean id="s2" class="com.hf.spring.di.Student">
+		<constructor-arg value="10086"></constructor-arg>
+		<constructor-arg value="王麻子"></constructor-arg>
+		<constructor-arg value="19"></constructor-arg>
+		<constructor-arg value="男"></constructor-arg>
+	</bean>
+	
+	<!--  -->
+	<bean id="s3" class="com.hf.spring.di.Student">
+		<constructor-arg value="2000"></constructor-arg>
+		<constructor-arg value="小平"></constructor-arg>
+		<constructor-arg value="90" index="2" type="java.lang.Double"></constructor-arg>
+		<constructor-arg value="男"></constructor-arg>
+	</bean>
+	
+	<!--使用p 注入-->
+	<bean id="s4" class="com.hf.spring.di.Student"
+		p:id="456123" p:name="项羽" p:age="28" p:sex="男" p:teacher-ref="teacher">
+	</bean>
+	
+	<!--  -->
+	<bean id="s5" class="com.hf.spring.di.Student">
+		<property name="id" value="10025952"></property>
+		<property name="name" value="张三三"></property>
+		<property name="age" value="25"></property>
+		<property name="sex" value="男"></property>
+		<property name="teacher" ref="teacher"></property>
+		<property name="teacher.tname" value="小红"></property>
+	</bean>
+	
+	<bean id="teacher" class="com.hf.spring.di.Teacher">
+		<property name="tid" value="12300"></property>
+		<property name="tname" value="老师"></property>
+	</bean>
+	
+	<bean id="s6" class="com.hf.spring.di.Student">
+		<property name="id" value="10025952"></property>
+		<property name="name" value="张三三"></property>
+		<property name="age" value="25"></property>
+		<property name="sex" value="男"></property>
+		<property name="teacher">
+			<bean id="ttttt" class="com.hf.spring.di.Teacher">
+				<property name="tid" value="05555"></property>
+				<property name="tname" value="admin"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<!-- 定义在某个bean内部的bean，只能在当前bean中使用 -->
+	<!-- <bean id="s6" class="com.hf.spring.di.Student">
+		<property name="id" value="10025952"></property>
+		<property name="name" value="张三三"></property>
+		<property name="age" value="25"></property>
+		<property name="sex" value="男"></property>
+		<property name="teacher" ref="ttttt"></property>
+	</bean> -->
+
+	<bean id="t1" class="com.hf.spring.di.Teacher">
+		<property name="tid" value="0000"></property>
+		<property name="tname" value="高强"></property>
+		<property name="cls">
+			<list>
+				<value>A</value>
+				<value>B</value>
+				<value>C</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- <bean id="t2" class="com.hf.spring.di.Teacher">
+		<property name="tid" value="0000"></property>
+		<property name="tname" value="婷婷"></property>
+		<property name="sList">    //这样命名有问题，不能小写之后跟着大写，生成get、set方法之后出错
+			<list>
+				<value>A</value>
+				<value>B</value>
+				<value>C</value>
+			</list>
+		</property>
+	</bean> -->
+	
+	<bean id="t2" class="com.hf.spring.di.Teacher">
+		<property name="tid" value="0000"></property>
+		<property name="tname" value="高强"></property>
+		<property name="students">
+			<list>
+				<ref bean="s1"/>
+				<ref bean="s2"/>
+				<ref bean="s3"/>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="t3" class="com.hf.spring.di.Teacher">
+		<property name="tid" value="0000"></property>
+		<property name="tname" value="admin"></property>
+		<property name="boosMap">
+			<map>
+				<entry>
+					<key>
+						<value>1002</value>
+					</key>
+					<value>童刚</value>
+				</entry>
+				<entry>
+					<key>
+						<value>10033</value>
+					</key>
+					<value>天山童姥</value>
+				</entry>
+			</map>
+		</property>
+	</bean>
+	
+	<bean id="t4" class="com.hf.spring.di.Teacher">
+		<property name="tid" value="10023"></property>
+		<property name="tname" value="admin"></property>
+		<property name="students" ref="students"></property>
+	</bean>
+	
+	<util:list id="students" >
+		<ref bean="s4"/>
+		<ref bean="s5"/>
+		<ref bean="s6"/>
+	</util:list>
+	
+	<util:map id="map">
+		<entry>
+			<key>
+				<value>123</value>
+			</key>
+			<value>张三</value>
+		</entry>
+	</util:map>
+	
+</beans>
