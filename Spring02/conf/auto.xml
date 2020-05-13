@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- <bean id="emp" class="com.hf.ioc.auto.Emp" autowire="byName"> -->
+	<bean id="emp" class="com.hf.ioc.auto.Emp" autowire="byType">
+		<property name="eid" value="10001"></property>
+		<property name="ename" value="张三"></property>
+		<!-- <property name="car" ref="car"></property>
+		<property name="dept" ref="dept"></property> -->
+	</bean>
+	
+	<bean id="car1" class="com.hf.ioc.auto.Car">
+		<property name="cid" value="2626"></property>
+		<property name="cname" value="丰田"></property>
+	</bean>
+	
+	<bean id="dept1" class="com.hf.ioc.auto.Dept">
+		<property name="did" value="100"></property>
+		<property name="dname" value="后勤部"></property>
+	</bean>
+</beans>
