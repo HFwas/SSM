@@ -5,7 +5,7 @@
 
 	<bean id="student" class="com.hf.ioc.scope.Student" scope="singleton">
 		<property name="sid" value="123"></property>
-		<property name="sname" value="小红"></property>
+		<property  name="sname" value="小红"></property>
 	</bean>
 	
 </beans>

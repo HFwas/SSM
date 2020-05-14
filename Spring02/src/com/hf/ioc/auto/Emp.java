@@ -11,7 +11,7 @@ public class Emp {
 	private DeptInterface dept;
 
 	public Integer getEid() {
-		return eid;
+		return eid ;
 	}
 
 	public void setEid(Integer eid) {

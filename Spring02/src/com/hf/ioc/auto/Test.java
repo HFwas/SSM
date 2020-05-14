@@ -8,6 +8,6 @@ public class Test {
 	public static void main(String[] args) {
 		ApplicationContext ac = new ClassPathXmlApplicationContext("auto.xml");
 		Emp emp = ac.getBean("emp", Emp.class);
-		System.out.println(emp);
+		System.out.println(emp) ;
 	}
 }

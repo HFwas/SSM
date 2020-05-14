@@ -14,7 +14,7 @@ public class Person {
 
 	public void setId(Integer id) {
 		System.out.println("Two: 依赖注入");
-		this.id = id;
+		this.id =  id;
 	}
 
 	public String getName() {

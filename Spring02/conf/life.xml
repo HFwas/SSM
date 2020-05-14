@@ -8,6 +8,6 @@
 		<property name="sex" value="男"></property>
 	</bean>
 	
-	<bean class="com.hf.ioc.life.AfterHandler"></bean>
+	<bean  class="com.hf.ioc.life.AfterHandler"></bean>
 	
 </beans>

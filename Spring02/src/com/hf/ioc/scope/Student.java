@@ -11,7 +11,7 @@ public class Student {
 	}
 
 	public void setSid(Integer sid) {
-		this.sid = sid;
+		this.sid = sid ;
 	}
 
 	public String getSname() {

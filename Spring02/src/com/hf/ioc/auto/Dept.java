@@ -7,7 +7,7 @@ public class Dept implements DeptInterface{
 	private String dname;
 
 	public Integer getDid() {
-		return did;
+		return  did;
 	}
 
 	public void setDid(Integer did) {

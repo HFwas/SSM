@@ -11,7 +11,7 @@
 		<property name="dept" ref="dept"></property> -->
 	</bean>
 	
-	<bean id="car1" class="com.hf.ioc.auto.Car">
+	<bean id=" car1" class="com.hf.ioc.auto.Car">
 		<property name="cid" value="2626"></property>
 		<property name="cname" value="丰田"></property>
 	</bean>

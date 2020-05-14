@@ -6,7 +6,7 @@ public class Car extends CarExtends{
 
 	private String cname;
 
-	public Integer getCid() {
+	public Integer getCid( ) {
 		return cid;
 	}
 
