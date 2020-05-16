@@ -3,11 +3,13 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
 
-	<context:component-scan base-package="com.hf.book"></context:component-scan>
+	<context:component-scan base-package="com.hf.book_xml"></context:component-scan>
 	
 	<!-- 引入属性文件 -->
 	<context:property-placeholder location="db.properties"/>
@@ -25,12 +27,29 @@
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
 	
-	<!-- 配置事务管理器 -->
+	<!-- 配置事务管理器,不管是用注解方式或xml方式配置事务，一定要有 DataSourceTransactionManager事务管理器的支持-->
 	<bean id="dataSourceTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
 	
-	<!-- 开启注解驱动，即对事务相关的注解进行扫描，解析含义并执行功能 -->
-	<tx:annotation-driven transaction-manager="dataSourceTransactionManager"/>
+	<!-- 配置事务通知 -->
+	<!-- 将事务通知和事务管理器连接起来 -->
+	<tx:advice id="tx" transaction-manager="dataSourceTransactionManager">
+		<tx:attributes>
+			<!-- 在设置好的切入点表达式下再次进行事务设置 -->
+			<tx:method name="buyBook"/>
+			<tx:method name="checkOut"/>
+			
+			<!-- 只有select开头的方法才会被事务管理 -->
+			<!-- <tx:method name="select*"/> -->
+		</tx:attributes>
+	</tx:advice>
+	
+    <!-- 配置切入点表达式-->
+	<aop:config>
+		<aop:pointcut expression="execution(* com.hf.book_xml.service.impl.*.*(..))" id="pointCut"/>
+		<!-- 将事务通知和切入点连接起来 -->
+		<aop:advisor advice-ref="tx" pointcut-ref="pointCut"/>
+	</aop:config>
 	
 </beans>

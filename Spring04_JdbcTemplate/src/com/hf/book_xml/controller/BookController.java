@@ -1,4 +1,4 @@
-package com.hf.book.controller;
+package com.hf.book_xml.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,8 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import com.hf.book.service.BookService;
-import com.hf.book.service.Cashier;
+import com.hf.book_xml.service.BookService;
+import com.hf.book_xml.service.Cashier;
 
 @Controller
 public class BookController {

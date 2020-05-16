@@ -1,11 +1,11 @@
-package com.hf.book.dao.impl;
+package com.hf.book_xml.dao.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.hf.book.dao.BookDao;
-import com.hf.book.exception.MyException;
+import com.hf.book_xml.dao.BookDao;
+import com.hf.book_xml.exception.MyException;
 
 @Repository
 public class BookDaoImpl implements BookDao{
