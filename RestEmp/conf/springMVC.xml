@@ -14,7 +14,14 @@
 		<property name="suffix" value=".jsp"></property>
 	</bean>
 	
+	<!-- 配置tomcat中默认的servlet，DefaultServlet
+		注意：当DefaultServlet所设置的的<url-pattern>的值与开发人员设置的<url-pattern>的值相同时，以开发人员所配置的DefaultServlet
+		作用：当客户端发送请求,由于，DefaultServlet所设置的的<url-pattern>的值与开发人员设置DispatherServlet的<url-pattern>的值都是斜线
+			因此先通过DispatherServlet处理请求，找该请求是否有相对应的处理器，有则处理，无则交给DefaultServlet处理
+			
+	 -->
 	<mvc:default-servlet-handler/>
 	
+	<!-- mvc驱动 -->
 	<mvc:annotation-driven />
 </beans>

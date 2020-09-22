@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- 1、配置：securityManager 安全管理器 -->
+	<!-- 在spring.xml里配置shiro的核心组件SecurityManager -->
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		<!-- 缓存 -->
+		<property name="cacheManager" ref="cacheManager" />
+		<!--域: 实现重数据库获取用户信息，需要我们自己创建一个类，实现Realm接口 -->
+		<property name="realm" ref="shiroRealm" />
+	</bean>
+
+	<!-- 2、配置：EhCacheManager 缓存框架 -->
+	<bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+		<property name="cacheManagerConfigFile" value="classpath:ehcache.xml"></property>
+	</bean>
+
+	<!-- 3、配置：shiroRealm类 (域) -->
+	<bean id="shiroRealm" class="com.hqyj.shiro.ShiroRealm"></bean>
+
+
+	<!-- 4、配置shiro框架拦截规则 -->
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<property name="securityManager" ref="securityManager" />
+		<property name="loginUrl" value="/login.jsp" /><!-- 登录页面 -->
+		<property name="successUrl" value="/view/frame/main.jsp" /><!-- 
+			登录后主页面 -->
+		<property name="unauthorizedUrl" value="/view/unauthorized" /><!-- 
+			跳转页面 ：有权限控制 -->
+		<property name="filterChainDefinitions"><!-- 设置拦截规则的属性 -->
+			<value>
+				<!--左边：url地址；右边：拦截规则 -->
+				<!-- anon ：直接可以访问（匿名） -->
+				<!-- authc :登录成功后才能访问 -->
+				/login.jsp = anon
+				/logout.do =logout
+				/view/** = authc
+			</value>
+		</property>
+	</bean>
+
+</beans>
