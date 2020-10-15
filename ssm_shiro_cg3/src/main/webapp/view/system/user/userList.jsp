@@ -49,19 +49,23 @@
 				<td>创建时间</td>
 				<td colspan="2">操作</td>
 			</tr>   
-     <c:forEach items="${user_dbList }" var="user">
-				<tr>
-					<td><input type="checkbox" name="id[]" value="${user.userId }" />${user.userId }</td>
-					<td>${user.name }</td>
-					<td>${user.username }</td>
-					<td>${user.password }</td>
-					<td>${user.salt }</td>
-					<td>${user.age }</td>
-					<td>${user.sex }</td>
-					<td><fmt:formatDate value="${user.createTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-					<td><a href="<%=basePath%>userController/delete.do?userIdStr=${user.userId }"  class="button border-red">删除</a>  <a href="<%=basePath%>userController/updateUI.do?userIdStr=${user.userId }"  class="button border-red">修改</a>  <a href="<%=basePath%>roleController/FPRoleUI.do?userIdStr=${user.userId }"  class="button border-red">分配角色</a></td>
-				</tr>
-			</c:forEach>
+     	<c:forEach items="${user_dbList }" var="user">
+			<tr>
+				<td><input type="checkbox" name="id[]" value="${user.userId }" />${user.userId }</td>
+				<td>${user.name }</td>
+				<td>${user.username }</td>
+				<td>${user.password }</td>
+				<td>${user.salt }</td>
+				<td>${user.age }</td>
+				<td>${user.sex }</td>
+				<td><fmt:formatDate value="${user.createTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+				<td>
+					<a href="<%=basePath%>userController/delete.do?userIdStr=${user.userId }"  class="button border-red">删除</a>  
+					<a href="<%=basePath%>userController/updateUI.do?userIdStr=${user.userId }"  class="button border-red">修改</a>  
+					<a href="<%=basePath%>roleController/FPRoleUI.do?userIdStr=${user.userId }"  class="button border-red">分配角色</a>
+				</td>
+			</tr>
+		</c:forEach>
         
       <tr>
         <td colspan="9"><div class="pagelist"> <a href="">上一页</a> <span class="current">1</span><a href="">2</a><a href="">3</a><a href="">下一页</a><a href="">尾页</a> </div></td>
